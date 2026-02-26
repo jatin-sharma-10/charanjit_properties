@@ -45,12 +45,13 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-hashes'", "https://cdnjs.cloudflare.com", "https://www.googletagmanager.com"],
+      scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
       imgSrc: ["'self'", "data:", "https:"],
       frameSrc: ["https://www.google.com"],
-      connectSrc: ["'self'"]
+      connectSrc: ["'self'", "https://www.google-analytics.com", "https://www.googletagmanager.com"]
     }
   }
 }));
@@ -213,7 +214,7 @@ app.get('/api/admin/leads', adminAuth, (req, res) => {
 });
 
 // --- Admin API: Update Lead Status ---
-app.patch('/api/admin/leads/:id', adminAuth, (req, res) => {
+const updateLead = (req, res) => {
   const { status, notes } = req.body;
   const validStatuses = ['new', 'contacted', 'in-progress', 'converted', 'closed'];
 
@@ -234,7 +235,9 @@ app.patch('/api/admin/leads/:id', adminAuth, (req, res) => {
   db.prepare(`UPDATE leads SET ${updates.join(', ')} WHERE id = @id`).run(params);
   const updated = db.prepare('SELECT * FROM leads WHERE id = ?').get(req.params.id);
   res.json({ success: true, lead: updated });
-});
+};
+app.patch('/api/admin/leads/:id', adminAuth, updateLead);
+app.put('/api/admin/leads/:id', adminAuth, updateLead);
 
 // --- Admin API: Delete Lead ---
 app.delete('/api/admin/leads/:id', adminAuth, (req, res) => {

@@ -3,3 +3,6 @@ data/
 .env
 *.db
 .DS_Store
+WhatsApp*.jpeg
+WhatsApp*.jpg
+TESTING_REPORT.md

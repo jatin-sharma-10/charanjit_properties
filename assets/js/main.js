@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCountUp();
   initSmoothScroll();
   initTestimonialsNav();
+  initEventListeners();
 });
 
 /* ---------- Preloader ---------- */
@@ -168,6 +169,38 @@ function initSmoothScroll() {
         window.scrollTo({ top, behavior: 'smooth' });
       }
     });
+  });
+}
+
+/* ---------- Event Listener Bindings ---------- */
+function initEventListeners() {
+  document.querySelectorAll('[data-show-form]').forEach(btn => {
+    btn.addEventListener('click', () => showForm(btn.dataset.showForm));
+  });
+
+  const overlay = document.getElementById('formOverlay');
+  if (overlay) overlay.addEventListener('click', closeForm);
+
+  const formModal = document.getElementById('formModal');
+  if (formModal) {
+    formModal.addEventListener('click', (e) => {
+      if (e.target === formModal || e.target === overlay) closeForm();
+    });
+  }
+
+  const closeBtn = document.getElementById('formCloseBtn');
+  if (closeBtn) closeBtn.addEventListener('click', closeForm);
+
+  const leadForm = document.getElementById('leadForm');
+  if (leadForm) leadForm.addEventListener('submit', handleFormSubmit);
+
+  document.querySelectorAll('[data-faq-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => toggleFaq(btn));
+  });
+
+  ['loanAmount', 'interestRate', 'loanTenure'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', calculateEMI);
   });
 }
 

@@ -193,7 +193,7 @@
               <li><i class="fas fa-check-circle"></i> Best Market Prices</li>
               <li><i class="fas fa-check-circle"></i> Complete Legal Support</li>
             </ul>
-            <button class="intent-btn" onclick="showForm('buy')">
+            <button class="intent-btn" data-show-form="buy">
               <span>Find Properties</span>
               <i class="fas fa-arrow-right"></i>
             </button>
@@ -217,7 +217,7 @@
               <li><i class="fas fa-check-circle"></i> Verified Buyers Network</li>
               <li><i class="fas fa-check-circle"></i> Hassle-free Process</li>
             </ul>
-            <button class="intent-btn sell" onclick="showForm('sell')">
+            <button class="intent-btn sell" data-show-form="sell">
               <span>List Your Property</span>
               <i class="fas fa-arrow-right"></i>
             </button>
@@ -229,9 +229,9 @@
 
   <!-- Lead Capture Form Modal -->
   <div class="form-modal" id="formModal">
-    <div class="form-modal-overlay" onclick="closeForm()"></div>
+    <div class="form-modal-overlay" id="formOverlay"></div>
     <div class="form-modal-content">
-      <button class="form-close" onclick="closeForm()">
+      <button class="form-close" id="formCloseBtn">
         <i class="fas fa-times"></i>
       </button>
       <div class="form-header">
@@ -241,7 +241,7 @@
         <h3 id="formTitle">Tell Us About Your Requirement</h3>
         <p id="formSubtitle">Fill in the details and our expert will reach out to you within 24 hours.</p>
       </div>
-      <form id="leadForm" onsubmit="handleFormSubmit(event)">
+      <form id="leadForm">
         <input type="hidden" id="formIntent" name="intent" value="">
         <div class="form-row">
           <div class="form-group">
@@ -404,22 +404,18 @@
     <div class="container">
       <div class="about-grid">
         <div class="about-visual animate-on-scroll">
-          <div class="about-image-stack">
-            <div class="about-img-card card-1">
-              <div class="img-placeholder">
-                <i class="fas fa-city"></i>
-                <span>Chandigarh Skyline</span>
-              </div>
-            </div>
-            <div class="about-img-card card-2">
-              <div class="img-placeholder">
-                <i class="fas fa-handshake"></i>
-                <span>Trusted Deals</span>
-              </div>
+          <div class="about-photo-wrapper">
+            <div class="about-photo-frame">
+              <img src="assets/images/charanjit-sharma.jpg" alt="Mr. Charanjit Sharma - Founder, Charanjit Properties" class="about-photo" loading="lazy">
+              <div class="photo-border-glow"></div>
             </div>
             <div class="about-experience-badge">
               <span class="exp-number">15+</span>
               <span class="exp-text">Years of<br>Excellence</span>
+            </div>
+            <div class="about-rating-badge">
+              <div class="rating-stars">★★★★★</div>
+              <span>5.0 on Google</span>
             </div>
           </div>
         </div>
@@ -500,7 +496,7 @@
             <h3>Luxury 3BHK Apartment</h3>
             <p class="property-location"><i class="fas fa-map-marker-alt"></i> Sector 20, Chandigarh</p>
             <div class="property-features"><span><i class="fas fa-expand-arrows-alt"></i> 1,800 sq.ft</span><span><i class="fas fa-bed"></i> 3 Bed</span><span><i class="fas fa-bath"></i> 2 Bath</span></div>
-            <div class="property-bottom"><span class="property-price">₹1.25 Cr</span><button class="property-enquire" onclick="showForm('buy')">Enquire <i class="fas fa-arrow-right"></i></button></div>
+            <div class="property-bottom"><span class="property-price">₹1.25 Cr</span><button class="property-enquire" data-show-form="buy">Enquire <i class="fas fa-arrow-right"></i></button></div>
           </div>
         </div>
         <div class="property-card animate-on-scroll" data-delay="100">
@@ -509,7 +505,7 @@
             <h3>Independent Kothi</h3>
             <p class="property-location"><i class="fas fa-map-marker-alt"></i> Phase 7, Mohali</p>
             <div class="property-features"><span><i class="fas fa-expand-arrows-alt"></i> 250 sq.yd</span><span><i class="fas fa-bed"></i> 4 Bed</span><span><i class="fas fa-bath"></i> 3 Bath</span></div>
-            <div class="property-bottom"><span class="property-price">₹2.10 Cr</span><button class="property-enquire" onclick="showForm('buy')">Enquire <i class="fas fa-arrow-right"></i></button></div>
+            <div class="property-bottom"><span class="property-price">₹2.10 Cr</span><button class="property-enquire" data-show-form="buy">Enquire <i class="fas fa-arrow-right"></i></button></div>
           </div>
         </div>
         <div class="property-card animate-on-scroll" data-delay="200">
@@ -518,7 +514,7 @@
             <h3>Residential Plot</h3>
             <p class="property-location"><i class="fas fa-map-marker-alt"></i> New Chandigarh, Mullanpur</p>
             <div class="property-features"><span><i class="fas fa-expand-arrows-alt"></i> 200 sq.yd</span><span><i class="fas fa-compass"></i> East Facing</span><span><i class="fas fa-road"></i> Corner</span></div>
-            <div class="property-bottom"><span class="property-price">₹85 Lakh</span><button class="property-enquire" onclick="showForm('buy')">Enquire <i class="fas fa-arrow-right"></i></button></div>
+            <div class="property-bottom"><span class="property-price">₹85 Lakh</span><button class="property-enquire" data-show-form="buy">Enquire <i class="fas fa-arrow-right"></i></button></div>
           </div>
         </div>
       </div>
@@ -541,17 +537,17 @@
           <div class="calc-inputs">
             <div class="calc-field">
               <label>Loan Amount (₹)</label>
-              <input type="range" id="loanAmount" min="500000" max="50000000" step="100000" value="5000000" oninput="calculateEMI()">
+              <input type="range" id="loanAmount" min="500000" max="50000000" step="100000" value="5000000">
               <span class="calc-value" id="loanAmountVal">₹50,00,000</span>
             </div>
             <div class="calc-field">
               <label>Interest Rate (%)</label>
-              <input type="range" id="interestRate" min="6" max="15" step="0.1" value="8.5" oninput="calculateEMI()">
+              <input type="range" id="interestRate" min="6" max="15" step="0.1" value="8.5">
               <span class="calc-value" id="interestRateVal">8.5%</span>
             </div>
             <div class="calc-field">
               <label>Loan Tenure (Years)</label>
-              <input type="range" id="loanTenure" min="1" max="30" step="1" value="20" oninput="calculateEMI()">
+              <input type="range" id="loanTenure" min="1" max="30" step="1" value="20">
               <span class="calc-value" id="loanTenureVal">20 Years</span>
             </div>
           </div>
@@ -627,7 +623,7 @@
       </div>
       <div class="faq-list">
         <div class="faq-item animate-on-scroll" data-delay="0">
-          <button class="faq-question" onclick="toggleFaq(this)">
+          <button class="faq-question" data-faq-toggle>
             <span>How do I list my property for sale?</span>
             <i class="fas fa-chevron-down"></i>
           </button>
@@ -636,7 +632,7 @@
           </div>
         </div>
         <div class="faq-item animate-on-scroll" data-delay="100">
-          <button class="faq-question" onclick="toggleFaq(this)">
+          <button class="faq-question" data-faq-toggle>
             <span>Which areas do you cover in Tricity?</span>
             <i class="fas fa-chevron-down"></i>
           </button>
@@ -645,7 +641,7 @@
           </div>
         </div>
         <div class="faq-item animate-on-scroll" data-delay="200">
-          <button class="faq-question" onclick="toggleFaq(this)">
+          <button class="faq-question" data-faq-toggle>
             <span>Do you charge any fees for property consultation?</span>
             <i class="fas fa-chevron-down"></i>
           </button>
@@ -654,7 +650,7 @@
           </div>
         </div>
         <div class="faq-item animate-on-scroll" data-delay="300">
-          <button class="faq-question" onclick="toggleFaq(this)">
+          <button class="faq-question" data-faq-toggle>
             <span>Do you help with legal documentation and registry?</span>
             <i class="fas fa-chevron-down"></i>
           </button>
@@ -663,7 +659,7 @@
           </div>
         </div>
         <div class="faq-item animate-on-scroll" data-delay="400">
-          <button class="faq-question" onclick="toggleFaq(this)">
+          <button class="faq-question" data-faq-toggle>
             <span>How quickly can you sell my property?</span>
             <i class="fas fa-chevron-down"></i>
           </button>

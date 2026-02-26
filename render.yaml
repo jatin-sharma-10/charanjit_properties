@@ -8,9 +8,9 @@ services:
     envVars:
       - key: PORT
         value: 3000
-      - key: ADMIN_USERNAME
-        value: charanjit
-      - key: ADMIN_PASSWORD
-        value: Channi@2026
       - key: NODE_ENV
         value: production
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
