@@ -417,7 +417,7 @@ function formatINR(num) {
   const activities = [
     { text: 'Someone enquired about a property in Mohali', time: 'Recently' },
     { text: 'A buyer enquired about plots in Chandigarh', time: 'A while ago' },
-    { text: 'Someone enquired about a flat in Zirakpur', time: 'Recently' },
+    { text: 'Someone enquired about a flat in Mohali', time: 'Recently' },
     { text: 'A buyer showed interest in a kothi in Panchkula', time: 'A while ago' },
   ];
 
