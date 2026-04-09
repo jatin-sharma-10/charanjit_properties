@@ -22,7 +22,7 @@
     "@type": "RealEstateAgent",
     "name": "Charanjit Properties",
     "image": "",
-    "telephone": ["+919417248112", "+918427808882"],
+    "telephone": ["+919417248112", "+917888681054"],
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Booth 1, 39B, Sector 39",
@@ -489,33 +489,9 @@
         <h2 class="section-title">Hot <span class="text-gradient">Properties</span></h2>
         <p class="section-desc">Handpicked deals currently available. Contact us for details.</p>
       </div>
-      <div class="properties-grid">
-        <div class="property-card animate-on-scroll" data-delay="0">
-          <div class="property-image"><div class="property-img-placeholder"><i class="fas fa-building"></i></div><span class="property-tag">New Listing</span><span class="property-type-tag">3 BHK Flat</span></div>
-          <div class="property-info">
-            <h3>Luxury 3BHK Apartment</h3>
-            <p class="property-location"><i class="fas fa-map-marker-alt"></i> Sector 20, Chandigarh</p>
-            <div class="property-features"><span><i class="fas fa-expand-arrows-alt"></i> 1,800 sq.ft</span><span><i class="fas fa-bed"></i> 3 Bed</span><span><i class="fas fa-bath"></i> 2 Bath</span></div>
-            <div class="property-bottom"><span class="property-price">₹1.25 Cr</span><button class="property-enquire" data-show-form="buy">Enquire <i class="fas fa-arrow-right"></i></button></div>
-          </div>
-        </div>
-        <div class="property-card animate-on-scroll" data-delay="100">
-          <div class="property-image"><div class="property-img-placeholder"><i class="fas fa-home"></i></div><span class="property-tag hot">Hot Deal</span><span class="property-type-tag">Kothi</span></div>
-          <div class="property-info">
-            <h3>Independent Kothi</h3>
-            <p class="property-location"><i class="fas fa-map-marker-alt"></i> Phase 7, Mohali</p>
-            <div class="property-features"><span><i class="fas fa-expand-arrows-alt"></i> 250 sq.yd</span><span><i class="fas fa-bed"></i> 4 Bed</span><span><i class="fas fa-bath"></i> 3 Bath</span></div>
-            <div class="property-bottom"><span class="property-price">₹2.10 Cr</span><button class="property-enquire" data-show-form="buy">Enquire <i class="fas fa-arrow-right"></i></button></div>
-          </div>
-        </div>
-        <div class="property-card animate-on-scroll" data-delay="200">
-          <div class="property-image"><div class="property-img-placeholder"><i class="fas fa-map"></i></div><span class="property-tag">Prime Location</span><span class="property-type-tag">Plot</span></div>
-          <div class="property-info">
-            <h3>Residential Plot</h3>
-            <p class="property-location"><i class="fas fa-map-marker-alt"></i> New Chandigarh, Mullanpur</p>
-            <div class="property-features"><span><i class="fas fa-expand-arrows-alt"></i> 200 sq.yd</span><span><i class="fas fa-compass"></i> East Facing</span><span><i class="fas fa-road"></i> Corner</span></div>
-            <div class="property-bottom"><span class="property-price">₹85 Lakh</span><button class="property-enquire" data-show-form="buy">Enquire <i class="fas fa-arrow-right"></i></button></div>
-          </div>
+      <div class="properties-grid" id="propertiesGrid">
+        <div class="property-card animate-on-scroll" style="opacity:0.5;text-align:center;padding:40px;">
+          <p style="color:var(--text-dim);">Loading properties...</p>
         </div>
       </div>
       <div style="text-align:center;margin-top:32px;" class="animate-on-scroll">
@@ -702,7 +678,7 @@
           </div>
           <div class="contact-card">
             <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
-            <div><h4>Call Us</h4><p><a href="tel:+919417248112">94172 48112</a><br><a href="tel:+918427808882">84278 08882</a></p></div>
+            <div><h4>Call Us</h4><p><a href="tel:+919417248112">94172 48112</a><br><a href="tel:+917888681054">78886 81054</a></p></div>
           </div>
           <div class="contact-card">
             <div class="contact-icon"><i class="fas fa-clock"></i></div>
@@ -715,8 +691,11 @@
         </div>
         <div class="contact-map animate-on-scroll">
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3433.6!2d76.7697!3d30.7194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDQzJzA5LjgiTiA3NsKwNDYnMTAuOSJF!5e0!3m2!1sen!2sin!4v1" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1716.5!2d76.7301!3d30.7439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed0b6b0b0001%3A0x1!2sMarket%2C%20Sector%2039B%2C%20Chandigarh!5e0!3m2!1sen!2sin!4v1" 
             width="100%" height="100%" style="border:0;border-radius:16px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <a href="https://www.google.com/maps/search/Booth+1,+39B,+Sector+39,+Chandigarh+160036" target="_blank" rel="noopener" class="map-directions-btn">
+            <i class="fas fa-directions"></i> Get Directions on Google Maps
+          </a>
         </div>
       </div>
     </div>
@@ -750,7 +729,7 @@
           <h4>Contact Info</h4>
           <p><i class="fas fa-map-marker-alt"></i> Booth 1, 39B, Sector 39, Chandigarh</p>
           <p><i class="fas fa-phone"></i> <a href="tel:+919417248112">94172 48112</a></p>
-          <p><i class="fas fa-phone"></i> <a href="tel:+918427808882">84278 08882</a></p>
+          <p><i class="fas fa-phone"></i> <a href="tel:+917888681054">78886 81054</a></p>
           <div class="footer-social">
             <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
             <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>

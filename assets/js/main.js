@@ -4,7 +4,7 @@
 
 const CONFIG = {
   whatsappPrimary: '919417248112',
-  whatsappSecondary: '918427808882',
+  whatsappSecondary: '917888681054',
   phonePrimary: '+919417248112'
 };
 
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initTestimonialsNav();
   initEventListeners();
+  loadFeaturedProperties();
 });
 
 /* ---------- Preloader ---------- */
@@ -414,17 +415,15 @@ function formatINR(num) {
   if (!ticker || !tickerText) return;
 
   const activities = [
-    { text: 'A buyer from Mohali enquired about a 3BHK flat', time: '2 min ago' },
-    { text: 'Property in Sector 22, Chandigarh sold successfully', time: '15 min ago' },
-    { text: 'New listing added in New Chandigarh', time: '28 min ago' },
-    { text: 'A seller from Panchkula listed their kothi', time: '45 min ago' },
-    { text: '3 buyers enquired about plots in Kharar today', time: '1 hr ago' },
-    { text: 'Commercial space in Sector 17 sold!', time: '2 hrs ago' },
-    { text: 'A family from Zirakpur found their dream home', time: '3 hrs ago' },
+    { text: 'Someone enquired about a property in Mohali', time: 'Recently' },
+    { text: 'A buyer enquired about plots in Chandigarh', time: 'A while ago' },
+    { text: 'Someone enquired about a flat in Zirakpur', time: 'Recently' },
+    { text: 'A buyer showed interest in a kothi in Panchkula', time: 'A while ago' },
   ];
 
   let index = 0;
   function showTicker() {
+    if (Math.random() > 0.5) return;
     const activity = activities[index % activities.length];
     tickerText.textContent = activity.text;
     ticker.querySelector('.ticker-time').textContent = activity.time;
@@ -432,13 +431,13 @@ function formatINR(num) {
     setTimeout(() => {
       ticker.classList.remove('visible');
       index++;
-    }, 5000);
+    }, 4000);
   }
 
   setTimeout(() => {
     showTicker();
-    setInterval(showTicker, 12000);
-  }, 8000);
+    setInterval(showTicker, 45000);
+  }, 30000);
 })();
 
 /* ---------- Parallax on Scroll ---------- */
@@ -450,3 +449,75 @@ window.addEventListener('scroll', () => {
     hero.style.opacity = 1 - (scrollY / (window.innerHeight * 0.8));
   }
 });
+
+/* ---------- Dynamic Property Listings ---------- */
+async function loadFeaturedProperties() {
+  const grid = document.getElementById('propertiesGrid');
+  if (!grid) return;
+
+  try {
+    const res = await fetch('/api/properties?status=available&limit=6');
+    const data = await res.json();
+
+    if (!data.properties || data.properties.length === 0) {
+      grid.innerHTML = `
+        <div class="property-card animate-on-scroll" style="text-align:center;padding:40px;grid-column:1/-1;">
+          <i class="fas fa-home" style="font-size:48px;opacity:0.2;margin-bottom:16px;display:block;"></i>
+          <p style="color:var(--text-dim);">New listings coming soon! Contact us for available properties.</p>
+        </div>`;
+      return;
+    }
+
+    const typeIcons = { flat: 'fa-building', kothi: 'fa-home', plot: 'fa-map', villa: 'fa-hotel',
+                        shop: 'fa-store', office: 'fa-briefcase', commercial: 'fa-city', other: 'fa-home' };
+
+    grid.innerHTML = data.properties.map((p, i) => {
+      const imgs = Array.isArray(p.images) ? p.images : [];
+      const hasImage = imgs.length > 0;
+      const imageHTML = hasImage
+        ? `<img src="${imgs[0]}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;">`
+        : `<div class="property-img-placeholder"><i class="fas ${typeIcons[p.type] || 'fa-home'}"></i></div>`;
+
+      const tagClass = (p.tag || '').toLowerCase().includes('hot') ? ' hot' : '';
+      const tagHTML = p.tag ? `<span class="property-tag${tagClass}">${p.tag}</span>` : '';
+      const typeLabel = p.type.charAt(0).toUpperCase() + p.type.slice(1);
+      const typeTag = p.bedrooms ? `${p.bedrooms} BHK ${typeLabel}` : typeLabel;
+
+      let features = '';
+      if (p.size) features += `<span><i class="fas fa-expand-arrows-alt"></i> ${p.size} ${p.size_unit || 'sq.ft'}</span>`;
+      if (p.bedrooms) features += `<span><i class="fas fa-bed"></i> ${p.bedrooms} Bed</span>`;
+      if (p.bathrooms) features += `<span><i class="fas fa-bath"></i> ${p.bathrooms} Bath</span>`;
+      if (p.facing) features += `<span><i class="fas fa-compass"></i> ${p.facing}</span>`;
+      if (p.floor) features += `<span><i class="fas fa-layer-group"></i> ${p.floor}</span>`;
+
+      const priceText = p.price_display || '₹' + (p.price || 0).toLocaleString('en-IN');
+
+      return `
+        <div class="property-card animate-on-scroll" data-delay="${i * 100}">
+          <div class="property-image">${imageHTML}${tagHTML}<span class="property-type-tag">${typeTag}</span></div>
+          <div class="property-info">
+            <h3>${p.title}</h3>
+            <p class="property-location"><i class="fas fa-map-marker-alt"></i> ${p.location}</p>
+            <div class="property-features">${features}</div>
+            <div class="property-bottom">
+              <span class="property-price">${priceText}</span>
+              <button class="property-enquire" data-show-form="buy">Enquire <i class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    grid.querySelectorAll('[data-show-form]').forEach(btn => {
+      btn.addEventListener('click', () => showForm(btn.dataset.showForm));
+    });
+
+    initScrollAnimations();
+  } catch (err) {
+    console.log('Properties API not available, showing placeholder');
+    grid.innerHTML = `
+      <div class="property-card animate-on-scroll" style="text-align:center;padding:40px;grid-column:1/-1;">
+        <i class="fas fa-home" style="font-size:48px;opacity:0.2;margin-bottom:16px;display:block;"></i>
+        <p style="color:var(--text-dim);">Contact us for the latest available properties.</p>
+      </div>`;
+  }
+}

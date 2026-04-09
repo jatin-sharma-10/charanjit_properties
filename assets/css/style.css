@@ -1697,6 +1697,27 @@ img { max-width: 100%; display: block; }
   filter: brightness(0.85) contrast(1.05) saturate(0.3);
 }
 
+.map-directions-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  margin-top: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition);
+}
+
+.map-directions-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+}
+
 /* ---------- Footer ---------- */
 .footer {
   padding: 64px 0 0;
