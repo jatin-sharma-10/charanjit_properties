@@ -501,7 +501,7 @@ async function loadFeaturedProperties() {
             <div class="property-features">${features}</div>
             <div class="property-bottom">
               <span class="property-price">${priceText}</span>
-              <button class="property-enquire" data-show-form="buy">Enquire <i class="fas fa-arrow-right"></i></button>
+              <a href="tel:+919417248112" class="property-enquire" style="text-decoration:none;"><i class="fas fa-phone"></i> Call Now</a>
             </div>
           </div>
         </div>`;
