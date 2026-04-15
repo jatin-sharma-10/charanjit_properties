@@ -13,10 +13,12 @@ const PORT = process.env.PORT || 3000;
 
 // --- Database Setup ---
 const fs = require('fs');
-const dataDir = path.join(__dirname, 'data');
+const dataDir = process.env.RAILWAY_VOLUME_MOUNT_PATH
+  ? path.join(process.env.RAILWAY_VOLUME_MOUNT_PATH, 'data')
+  : path.join(__dirname, 'data');
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 
-const db = new Database(path.join(__dirname, 'data', 'leads.db'));
+const db = new Database(path.join(dataDir, 'leads.db'));
 db.pragma('journal_mode = WAL');
 
 db.exec(`
